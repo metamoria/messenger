@@ -1,0 +1,156 @@
+<ion-header style="position: fixed;" [translucent]="true" class="ion-no-border">
+<ion-toolbar style="--background-color: transparent; --background: transparent;">
+<ion-buttons slot="start">
+<ion-back-button mode="md" text=""></ion-back-button>
+</ion-buttons>
+<ion-buttons slot="end">
+<ion-button (click)="themeMode()">
+<ion-icon *ngIf="!thememode" slot="icon-only" name="sunny-outline"></ion-icon>
+<ion-icon *ngIf="thememode" slot="icon-only" name="moon-outline"></ion-icon>
+</ion-button>
+</ion-buttons>
+</ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true" class="auth-page">
+
+<span class="{{themewave}}{{thememode}}"></span>
+<ion-grid class="center_loc">
+<ion-row>
+<ion-col class="ion-text-center" size-md="6" size-lg="4" size-xs="12">
+
+
+<div [style.display]="serverstatus == 'conneting' ? '' : 'none'" *ngIf="desktopwebs == 'desktopwebs'">
+<ion-spinner style="width: 70px; height: 70px;" name="crescent"></ion-spinner>
+<p style="margin: 40px 20px;font-size: 18px;margin-bottom: 0;">{{'messenger.serverconnecting' | translate}}</p>
+</div>
+
+<div [style.display]="serverstatus == 'connecterror' ? '' : 'none'" *ngIf="desktopwebs == 'desktopwebs'">
+<ion-icon style="width: 70px; height: 70px;" name="alert-circle-outline"></ion-icon>
+<p style="margin: 40px 20px;font-size: 18px;margin-bottom: 0;">{{'messenger.serverconnecterror' | translate}}</p>
+</div>
+
+
+<form [style.display]="serverstatus == 'conneting' ? 'none' : '' || serverstatus == 'connecterror' ? 'none' : ''" *ngIf="desktopwebs == 'desktopwebs'">
+<!--
+<div class="logo">
+<img src="assets/logo/favicon.png" class="scale-up-center logos"/>
+</div>
+<p style="margin: 10px 0 20px 0;" class="ion-text-center">{{'login_app_name' | translate}}</p>
+-->
+
+<div id="qrcode" style="width:210px; height:210px; margin: 0 auto; margin-top:15px;">
+<ion-spinner style="width: 50px; height: 50px; margin: 90px 0;" name="crescent"></ion-spinner>
+</div>
+
+<p style="
+font-weight: 700;
+font-size: 25px;
+margin-top: 35px; margin-bottom: 30px;
+">{{'login_qr_info' | translate}}</p>
+
+<div style="
+text-align: left;
+padding: 0 55px;
+">
+<p [innerHTML]="'login_qr_info_one' | translate"></p> 
+<p [innerHTML]="'login_qr_info_two' | translate"></p>
+<p [innerHTML]="'login_qr_info_three' | translate"></p>
+</div>
+
+<p (click)="pwanormal()" style="margin: 30px 0 20px 0;font-size: 13px;color: #4381c7;font-weight: 600;cursor: pointer;" class="ion-text-center">{{'login_qr_info_cont' | translate}}</p>
+
+
+<p *ngIf="svprinfos == 'getinforcalwait'" style="margin: 30px 0;margin-top: 25px;">
+{{'auth.lagcallwait' | translate}}
+<ion-progress-bar style="width: 90%;margin: 0 auto;margin-top: 10px;" type="indeterminate"></ion-progress-bar>
+</p>
+
+<p *ngIf="svprinfos == 'getinfor'" style="margin: 30px 0;margin-top: 25px;">
+{{'auth.logconnteinfos' | translate}}
+<ion-progress-bar style="width: 90%;margin: 0 auto;margin-top: 10px;" type="indeterminate"></ion-progress-bar>
+</p>
+
+<p *ngIf="svprinfos == 'getinforred'" style="margin: 30px 0;margin-top: 25px;">
+<ion-icon name="bag-outline"></ion-icon>
+{{'messenger.sesioncncsel' | translate}}
+</p>
+</form>
+
+<form *ngIf="desktopwebs == 'mobilesall'" [formGroup]="login" (ngSubmit)="onLogin()">
+<div class="logo">
+<img src="assets/logo/favicon.png" class="scale-up-center logos"/>
+</div>
+<p style="margin: 10px 0 20px 0;" class="ion-text-center">{{'login_app_name' | translate}}</p>
+
+<!--
+<ion-card [style.display]="!emailcode ? 'none' : ''" color="light" class="auth-card ion-margin">
+<ion-item [disabled]="form_post_pross" lines="none" color="light">
+<ion-input maxlength="100" type="text" placeholder="{{'auth.emailcode' | translate}}" formControlName="emailcode"></ion-input>
+<ion-button (click)="sendEmail()" slot="end" fill="clear" class="ion-no-margin ion-no-padding">
+<ion-icon slot="icon-only" class="ion-no-margin ion-no-padding" color="success" name="sync-outline"></ion-icon>
+</ion-button>
+</ion-item>
+</ion-card>
+
+<ion-button *ngIf="emailcode" (click)="register()" color="dark" expand="block" class="ion-margin-start ion-margin-end ion-margin-bottom" type="button" [disabled]="!login.valid || form_post_pross">
+{{!mailsatusu ? ('auth.verifcations' | translate) : ('auth.sendinmail' | translate)}}
+<ion-spinner *ngIf="form_post_pross" name="dots" style="margin-left: 10px;"></ion-spinner>
+</ion-button>
+-->
+
+
+
+<ion-card [style.display]="emailcode ? 'none' : ''" color="light" class="auth-card ion-margin">
+<!--
+<ion-item [disabled]="form_post_pross" lines="none" color="light">
+<ion-input maxlength="60" (ionChange)="ionChange($event,'email')" type="email" placeholder="{{'auth.email' | translate}}" formControlName="email"></ion-input>
+<ion-button slot="end" fill="clear" class="ion-no-margin ion-no-padding">
+<ion-icon *ngIf="validators_email == 'minlength'" slot="icon-only" class="ion-no-margin ion-no-padding" color="warning" name="alert-circle-outline"></ion-icon>
+<ion-spinner name="dots" *ngIf="validators_email == 'pross'"></ion-spinner>
+<ion-icon *ngIf="validators_email == 'okey'" slot="icon-only" class="ion-no-margin ion-no-padding" color="success" name="checkmark-circle-outline"></ion-icon>
+</ion-button>
+</ion-item>
+-->
+<p style="display: none;text-align: left; margin-bottom: 10px;">{{'auth.name' | translate}}</p>
+<ion-item lines="none" color="light">
+<ion-input type="text" maxlength="50" placeholder="{{'auth.name' | translate}}" formControlName="fname"></ion-input>
+</ion-item>
+
+<ion-item lines="none" color="light" class="ion-no-inner-padding-end">
+<ion-input (ionChange)="ionChange($event,'password')" id="passvisibleLog" type="password" maxlength="70" placeholder="{{'auth.password' | translate}}" formControlName="password"></ion-input>
+<ion-button (click)="passsvibled('passvisibleLog')" slot="end" fill="clear" class="ion-no-margin ion-no-padding">
+<ion-icon slot="icon-only" class="ion-no-margin ion-no-padding" color="tertiary" name="{{inputpasseye}}"></ion-icon>
+<ion-icon style="padding-left: 7px;" *ngIf="validators_password == 'minlength'" slot="icon-only" class="ion-no-margin ion-no-padding" color="warning" name="alert-circle-outline"></ion-icon>
+<ion-spinner style="padding-left: 7px;" name="dots" *ngIf="validators_password == 'pross'"></ion-spinner>
+<ion-icon style="padding-left: 7px;" *ngIf="validators_password == 'okey'" slot="icon-only" class="ion-no-margin ion-no-padding" color="success" name="checkmark-circle-outline"></ion-icon>
+</ion-button>
+</ion-item>
+
+<ion-item lines="none" color="light" class="ion-no-inner-padding-end">
+<ion-input (ionChange)="ionChange($event,'passwordtry')" id="passvisibleLogtry" type="password" maxlength="70" placeholder="{{'auth.password_confirm' | translate}}" formControlName="passwordtry"></ion-input>
+<ion-button (click)="passsvibled('passvisibleLog')" slot="end" fill="clear" class="ion-no-margin ion-no-padding">
+<ion-spinner style="padding-left: 7px;" name="dots" *ngIf="validators_passwordtry == 'pross'"></ion-spinner>
+<ion-icon style="padding-left: 7px;" *ngIf="validators_passwordtry == 'minlength'" slot="icon-only" class="ion-no-margin ion-no-padding" color="warning" name="alert-circle-outline"></ion-icon>
+<ion-icon style="padding-left: 7px;" *ngIf="validators_passwordtry == 'okey'" slot="icon-only" class="ion-no-margin ion-no-padding" color="success" name="checkmark-circle-outline"></ion-icon>
+</ion-button>
+</ion-item>
+
+
+<p style="display: none; text-align: left; margin-bottom: 10px;">{{'auth.userid' | translate}}</p>
+<ion-item style="display: none;" lines="none" color="light" class="ion-no-inner-padding-end">
+<ion-input [disabled]="true" id="passvisibleLog" type="text" maxlength="70" formControlName="userid"></ion-input>
+</ion-item>
+<p style="display: none; text-align: left;margin-top: 10px;margin-bottom: 10px;font-size: 13px;">{{'auth.useridinfo' | translate}}</p>
+</ion-card>
+
+<ion-button *ngIf="!emailcode" color="dark" expand="block" class="ion-margin-start ion-margin-end ion-margin-bottom" type="submit" [disabled]="!login.valid || form_post_pross">
+{{'auth.log_in' | translate}}
+<ion-spinner *ngIf="form_post_pross" name="dots" style="margin-left: 10px;"></ion-spinner>
+</ion-button>
+
+</form>
+</ion-col>
+</ion-row>
+</ion-grid>
+</ion-content>

@@ -1,0 +1,214 @@
+<ion-header [translucent]="false" class="ion-no-border">
+<ion-toolbar>
+<ion-title><ion-icon color="dark" (click)="closeModal()" name="remove-outline"></ion-icon></ion-title>
+</ion-toolbar>
+</ion-header>
+
+<ion-content class="auth-page">
+
+<div *ngIf="photo" class="ion-padding ion-text-center" style="padding: 0;">
+<ion-item [disabled]="form_post_pross" lines="none" style="padding: 0;--padding-bottom: 16px;--padding-top: 16px;"> 
+<ion-avatar style="
+margin: 0 auto;
+width: 105px;
+height: 105px;
+" class="avatar-lg">
+<img *ngIf="photo == 'none'" src="assets/images/avatars/0.jpg">
+<img *ngIf="photo != 'none'" src="{{photo}}">
+</ion-avatar>
+<ion-button style="
+position: absolute;
+width: 50px;
+height: 50px;
+background: #00bcd4;
+border-radius: 50px;
+left: 50%;
+right: 50%;
+margin-top: 50px;
+margin-left: 10px;
+z-index: 999;
+display: block;
+" (click)="changephoto()" [disabled]="validators_photo" slot="end" fill="clear" class="ion-no-margin ion-no-padding">
+<ion-icon *ngIf="!validators_photo" style="
+color: white;
+font-size: 25px;
+" name="camera"></ion-icon>
+<ion-spinner style="color: white;" *ngIf="validators_photo" name="crescent"></ion-spinner>
+</ion-button>
+<input style="display: none;" id="selecImagePickerPP" class="displaynonesss" min="1" max="1" type="file" accept="image/*" (change)="selecImagePicker($event)">
+</ion-item>
+</div>
+
+
+<form [formGroup]="updateuserdata" (ngSubmit)="updatas()">
+
+<ion-list>
+
+<ion-item [disabled]="form_post_pross" lines="none">
+<ion-label position="stacked">{{'auth.name' | translate}}</ion-label>
+<ion-input maxlength="120" type="text" formControlName="name" (ionChange)="ionChange($event,'name')"></ion-input>
+<ion-button style="height: 100%;margin-right: 4px;" (click)="updata('name')" *ngIf="validators_name != 'false'" [disabled]="validators_name == 'pross'" slot="end" fill="clear" class="ion-no-margin ion-no-padding">
+<ion-icon style="width: 29px;height: 29px;background: rgb(96 125 139 / 84%);border-radius: 50px;padding: 3px; color: white;" *ngIf="validators_name == 'change'" slot="icon-only" class="ion-no-margin ion-no-padding" name="sync-outline"></ion-icon>
+<ion-spinner name="dots" *ngIf="validators_name == 'pross'"></ion-spinner>
+</ion-button>
+</ion-item>
+
+<ion-item [disabled]="form_post_pross" lines="none" class="ion-no-inner-padding-end">
+<ion-label position="stacked">{{'messenger.bio' | translate}}</ion-label>
+<ion-textarea formControlName="desc_status" (ionChange)="ionChange($event,'desc_status')"></ion-textarea>
+<ion-button style="height: 100%;margin-right: 4px;" (click)="updata('desc_status')" *ngIf="validators_desc_status != 'false'" [disabled]="validators_desc_status == 'pross'" slot="end" fill="clear" class="ion-no-margin ion-no-padding">
+<ion-icon  style="width: 29px;height: 29px;background: rgb(96 125 139 / 84%);border-radius: 50px;padding: 3px; color: white;" *ngIf="validators_desc_status == 'change'" slot="icon-only" class="ion-no-margin ion-no-padding" name="sync-outline"></ion-icon>
+<ion-spinner name="dots" *ngIf="validators_desc_status == 'pross'"></ion-spinner>
+</ion-button>
+</ion-item>
+
+</ion-list>
+
+<!--
+<ion-button color="dark" expand="block" class="ion-margin-start ion-margin-end ion-margin-bottom" type="submit" [disabled]="!updateuserdata.valid || form_post_pross">
+{{'auth.log_in' | translate}}
+<ion-spinner *ngIf="form_post_pross" name="dots" style="margin-left: 10px;"></ion-spinner>
+</ion-button>
+-->
+</form>
+
+<ion-list style="margin-top: -15px;">
+
+<ion-item button (click)="writeToClipboard()">
+<ion-icon name="finger-print" color="success" slot="start"></ion-icon>
+<ion-label style="font-size: 14px;" *ngIf="userData">
+{{userData.userid}}
+</ion-label>
+</ion-item>
+
+
+<ion-item class="hiddenqrlog" button (click)="openqrlogin()">
+<ion-icon name="qr-code-outline" color="primary" slot="start"></ion-icon>
+<ion-label style="font-size: 15px;" *ngIf="userData">
+{{'messenger.qrlogin' | translate}}
+</ion-label>
+</ion-item>
+<!--
+<ion-item>
+<ion-icon name="mail" color="primary" slot="start"></ion-icon>
+<ion-label style="font-size: 15px;" *ngIf="userData">
+{{userData.email}}
+</ion-label>
+</ion-item>
+-->
+</ion-list>
+
+<ion-list>
+<p class="preas backgorsd">{{ 'messenger.background' | translate}}</p>
+<div scrollX="true" class="ioitems iobackgrods">
+<ion-chip class="scrollX pollwallc" [style.background-color]="chatDizaynColor.color" [style.border-color]="wall.name == inputWalls ? 'rgb(0 0 0 / 72%)' : '#eaeaea'" [color]="wall.visebled == inputWalls ? 'dark' : 'medium'" *ngFor="let wall of walls" (click)="wallSelect(wall);">
+<img class="imagelaspol" src="{{wall.image}}">
+</ion-chip>
+</div>
+</ion-list>
+
+<ion-list>
+<p class="preas backgorsd">{{ 'messenger.backgroundcolor' | translate}}</p>
+<div scrollX="true" class="ioitems iobackgrods">
+<ion-chip class="scrollX pollwallc colorppcip" [style.background-color]="wall.color" [style.border-color]="wall.name == inputWallsColor ? 'rgb(0 0 0 / 72%)' : '#eaeaea'" [color]="wall.visebled == inputWallsColor ? 'dark' : 'medium'" *ngFor="let wall of colors" (click)="wallSelectColor(wall);">
+</ion-chip>
+</div>
+</ion-list>
+
+<ion-list>
+<ion-item button (click)="logout()">
+<ion-icon name="log-out-outline" color="danger" slot="start"></ion-icon>
+<ion-label style="font-size: 14px;" *ngIf="userData">
+{{'log_out' | translate}}
+</ion-label>
+</ion-item>
+
+<ion-item button (click)="themeMode()">
+ 
+<ion-icon *ngIf="!thememode" slot="icon-only" slot="start" name="sunny-outline"></ion-icon>
+<ion-icon *ngIf="thememode" slot="icon-only" slot="start" name="moon-outline"></ion-icon>
+
+<ion-label style="font-size: 14px;" *ngIf="userData">
+{{'messenger.darkmode' | translate}}
+</ion-label>
+</ion-item>
+
+<ion-item button lines="none" detail="false">
+<ion-label style="font-size: 12px;text-align: center;margin: 0;">
+Me Force Technology
+</ion-label>
+</ion-item>
+</ion-list>
+
+<ion-list>
+<ion-list-header></ion-list-header>
+</ion-list>
+<span class="{{themewave}}{{thememode}}"></span>
+<!--
+<ion-list>
+<ion-item detail>
+<ion-icon name="checkmark-done-circle" color="success" slot="start"></ion-icon>
+<ion-label>
+Active Status
+</ion-label>
+<ion-note slot="end">On</ion-note>
+</ion-item>
+<ion-item detail>
+<ion-icon name="chatbubble-ellipses" color="primary" slot="start"></ion-icon>
+<ion-label>
+Message requests
+</ion-label>
+</ion-item>
+<ion-item detail lines="none">
+<ion-icon name="call" color="primary" slot="start"></ion-icon>
+<ion-label>
+Mobile number
+</ion-label>
+</ion-item>
+
+<ion-list-header class="list-header-custom">
+Preferences
+</ion-list-header>
+<ion-item detail>
+<ion-icon name="notifications-circle" color="tertiary" slot="start"></ion-icon>
+<ion-label>
+Notification & sounds
+</ion-label>
+<ion-note slot="end">On</ion-note>
+</ion-item>
+<ion-item detail>
+<ion-icon name="people" color="tertiary" slot="start"></ion-icon>
+<ion-label>
+People
+</ion-label>
+</ion-item>
+<ion-item detail>
+<ion-icon name="chatbubble" color="primary" slot="start"></ion-icon>
+<ion-label>
+Messaging settings
+</ion-label>
+</ion-item>
+<ion-item detail>
+<ion-icon name="albums" color="danger" slot="start"></ion-icon>
+<ion-label>
+Story
+</ion-label>
+</ion-item>
+<ion-item detail lines="none">
+<ion-icon name="lock-closed" color="dark" slot="start"></ion-icon>
+<ion-label>
+Secret conversations
+</ion-label>
+</ion-item>
+
+<ion-list-header></ion-list-header>
+<ion-item button lines="none" href="https://takethatdesign.com" target="_blank">
+<ion-icon name="open-outline" slot="start" color="primary"></ion-icon>
+<ion-label color="primary">
+Visit <strong>Take That Design</strong>
+</ion-label>
+</ion-item>
+<ion-list-header></ion-list-header>
+</ion-list>
+-->
+</ion-content>

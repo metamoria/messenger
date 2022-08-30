@@ -1,0 +1,138 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ChangeListManager">
+    <list default="true" id="e9d14ee1-6597-4c3d-adcc-0508e52ab52c" name="Changes" comment="" />
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="MarkdownSettingsMigration">
+    <option name="stateVersion" value="1" />
+  </component>
+  <component name="NxDevToolsSettings">
+    <node-interpreter value="project" />
+    <nx-package value="" />
+    <nx.json value="" />
+  </component>
+  <component name="ProblemsViewState">
+    <option name="selectedTabId" value="CurrentFile" />
+  </component>
+  <component name="ProjectId" id="2E1ALOSmqFOb04hePTNDWmMk98v" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "RunOnceActivity.OpenProjectViewOnStart": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "WebServerToolWindowFactoryState": "false",
+    "com.google.cloudcode.ide_session_index": "20220829_0001",
+    "js.ns.project": "true",
+    "js.ns.project.flavor": "TypeScript",
+    "nodejs_package_manager_path": "npm",
+    "settings.editor.selected.configurable": "configurable.group.build",
+    "ts.external.directory.path": "/Users/hadrien/Library/Application Support/JetBrains/Toolbox/apps/WebStorm/ch-0/222.3739.57/WebStorm.app/Contents/plugins/JavaScriptLanguage/jsLanguageServicesImpl/external",
+    "vue.rearranger.settings.migration": "true"
+  }
+}]]></component>
+  <component name="RunManager" selected="npm.start">
+    <configuration name="Tests (app)" type="JavaScriptTestRunnerKarma">
+      <config-file value="$PROJECT_DIR$/karma.conf.js" />
+      <working-directory value="$PROJECT_DIR$" />
+      <node-interpreter value="project" />
+      <envs />
+      <method v="2" />
+    </configuration>
+    <configuration name="E2E Tests (app)" type="JavaScriptTestRunnerProtractor">
+      <config-file value="$PROJECT_DIR$/e2e/protractor.conf.js" />
+      <node-interpreter value="project" />
+      <protractor-options value="" />
+      <envs />
+      <scope-kind value="ALL" />
+      <method v="2" />
+    </configuration>
+    <configuration name="Angular Application" type="JavascriptDebugType" uri="http://localhost:4200">
+      <method v="2" />
+    </configuration>
+    <configuration name="music.selectors.ts" type="NodeJSConfigurationType" temporary="true" node-parameters="--require ts-node/register " path-to-js-file="$PROJECT_DIR$/src/app/shared/ngrx/music/music.selectors.ts" working-dir="$PROJECT_DIR$/src/app/shared/ngrx/music">
+      <method v="2" />
+    </configuration>
+    <configuration name="Run PhoneGap" type="PhoneGap" factoryName="PhoneGap/Cordova" singleton="false" nameIsGenerated="true">
+      <option name="myExecutable" value="$USER_HOME$/.nvm/versions/node/v16.16.0/bin/ionic" />
+      <option name="myWorkDir" value="$PROJECT_DIR$/node_modules/cordova-plugin-ionic-webview" />
+      <option name="myCommand" value="serve" />
+      <option name="myPassParent" value="true" />
+      <option name="myPlatform" value="ios" />
+      <option name="myExtraArgs" value="" />
+      <option name="hasTarget" value="false" />
+      <option name="target" value="" />
+      <method v="2">
+        <option name="PhonegapTask" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="ng" type="js.build_tools.npm" nameIsGenerated="true">
+      <package-json value="$PROJECT_DIR$/package.json" />
+      <command value="run" />
+      <scripts>
+        <script value="ng" />
+      </scripts>
+      <node-interpreter value="project" />
+      <package-manager value="$USER_HOME$/.nvm/versions/node/v16.16.0/bin/pnpm" />
+      <envs />
+      <method v="2" />
+    </configuration>
+    <configuration name="start" type="js.build_tools.npm" temporary="true" nameIsGenerated="true">
+      <package-json value="$PROJECT_DIR$/package.json" />
+      <command value="run" />
+      <scripts>
+        <script value="start" />
+      </scripts>
+      <node-interpreter value="project" />
+      <envs />
+      <method v="2" />
+    </configuration>
+    <configuration name="app:build" type="js.build_tools.nx">
+      <node-interpreter value="project" />
+      <tasks>
+        <task value="app:build" />
+      </tasks>
+      <envs />
+      <method v="2" />
+    </configuration>
+    <list>
+      <item itemvalue="Cordova.Run PhoneGap" />
+      <item itemvalue="JavaScript Debug.Angular Application" />
+      <item itemvalue="Karma.Tests (app)" />
+      <item itemvalue="Node.js.music.selectors.ts" />
+      <item itemvalue="npm.ng" />
+      <item itemvalue="npm.start" />
+      <item itemvalue="Nx.app:build" />
+      <item itemvalue="Protractor.E2E Tests (app)" />
+    </list>
+    <recent_temporary>
+      <list>
+        <item itemvalue="npm.start" />
+        <item itemvalue="Node.js.music.selectors.ts" />
+      </list>
+    </recent_temporary>
+  </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="e9d14ee1-6597-4c3d-adcc-0508e52ab52c" name="Changes" comment="" />
+      <created>1661752659858</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1661752659858</updated>
+      <workItem from="1661752663014" duration="116000" />
+      <workItem from="1661752798259" duration="11910000" />
+      <workItem from="1661766761826" duration="308000" />
+    </task>
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
+  </component>
+</project>

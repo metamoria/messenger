@@ -1,0 +1,34 @@
+<ion-header [translucent]="true" class="ion-no-border">
+<ion-toolbar>
+<ion-title><ion-icon color="dark" (click)="closeModal()" name="remove-outline"></ion-icon></ion-title>
+</ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+<div class="ion-padding ion-text-center">
+<ion-avatar class="avatar-lg">
+<ion-icon name="language-outline"></ion-icon>
+</ion-avatar>
+<h4><strong>{{'auth.changelanguage' | translate}}</strong></h4>
+</div>
+
+<div *ngIf="!langdata" class="center_loc margintop50">
+<ion-spinner name="dots"></ion-spinner>
+</div>
+
+<ion-list>
+<ion-item button detail="false" *ngFor="let row of langdata" (click)="langChange(row)">
+<ion-icon name="caret-forward-outline" color="success" slot="start"></ion-icon>
+<ion-label>
+<h2>{{row.orgintitle}}</h2>
+<p>{{row.title}}</p>
+</ion-label>
+<ion-button slot="end"  fill="clear" class="xion-no-margin xion-no-padding">
+<ion-icon *ngIf="settings.language != row.code && !row.lock && !row.loder" slot="icon-only" name="radio-button-off-outline" color="dark"></ion-icon>
+<ion-icon *ngIf="settings.language == row.code && !row.lock && !row.loder" slot="icon-only" name="radio-button-on-outline" color="success"></ion-icon>
+<ion-icon *ngIf="row.lock && !row.loder" slot="icon-only" name="lock-closed-outline" color="success"></ion-icon>
+<ion-spinner *ngIf="row.loder" slot="icon-only" name="crescent" color="primary"></ion-spinner>
+</ion-button>
+</ion-item>
+</ion-list>
+</ion-content>

@@ -1,0 +1,57 @@
+<ion-content [fullscreen]="true" class="auth-page">
+<ion-grid class="center_loc" >
+<ion-row>
+<ion-col class="ion-text-center" size-md="6" size-lg="5" size-xs="12">
+
+
+<div *ngIf="starter" class="loader">
+<ion-spinner name="dots"></ion-spinner>
+</div>
+
+<div *ngIf="!starter" class="starters">
+<ion-slides #mySlider pager="true" [options]="slideOpts">
+<ion-slide>
+<div class="startlos">
+<img src="assets/logo/favicon.png" class="scale-up-center logos"/>
+<h1>{{'login_app_name' | translate}}</h1>
+<p style="max-width: 282px;">{{'auth.start_desc1' | translate}}</p>
+<div class="languesx">
+<a class="xpruples" (click)="openLangue()"><ion-icon name="language-outline"></ion-icon>&nbsp; {{'auth.changelanguage' | translate}}</a>
+</div>
+</div>
+</ion-slide>
+<ion-slide>
+<div class="startlos">
+<ion-icon class="scale-up-center" color="success" name="chatbubbles-outline"></ion-icon>
+<h1>{{'auth.messagefree' | translate}}</h1>
+<p>{{'auth.start_desc2' | translate}}</p>
+<div class="languesx">
+<a class="xsuccess"><ion-icon name="key-outline"></ion-icon>&nbsp; {{'auth.endtoendEncryption' | translate}}</a>
+</div>
+</div>
+</ion-slide>
+<ion-slide>
+<div class="startlos">
+<ion-icon class="scale-up-center" color="secondary" name="videocam-outline"></ion-icon>
+<ion-icon style="width: 74px;margin-left: 17px;" class="scale-up-center" color="secondary" name="call-outline"></ion-icon>
+<h1>{{'auth.sharereads' | translate}}</h1>
+<p>{{'auth.start_desc3' | translate}}</p>
+<div class="languesx">
+<a class="xsecondry"><ion-icon name="shapes-outline"></ion-icon>&nbsp; {{'auth.pvstp' | translate}}</a>
+</div>
+</div>
+</ion-slide>
+</ion-slides>
+
+<div class="startbtnl">
+<ion-button (click)="letsStart()" expand="block" color="dark" class="xxstartbtnl ion-margin-start ion-margin-end ion-margin-bottom" type="button">
+{{'auth.letsstart' | translate}}
+</ion-button>
+</div>
+
+</div>
+
+</ion-col>
+</ion-row>
+</ion-grid>
+</ion-content>

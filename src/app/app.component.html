@@ -1,0 +1,46 @@
+<ion-app class="{{apppwaalls}}" id="ionapps" [ngClass]="{'dark-theme': (theme$ | async), 'camera': isCameraStart}">
+
+<ion-menu side="start" swipeGesture="false" type="push" menuId="camera" contentId="main" class="camera-menu" 
+(ionWillOpen)="qrStartScan($event)" (ionDidClose)="qrStopScan($event)">
+<ion-content style="--background-color: transparent !important; --background: transparent !important;">
+<ion-toolbar style="--background: transparent;">
+<ion-buttons slot="end">
+<ion-button (click)="qrStopScanx($event)">
+<ion-icon size="large" slot="icon-only" name="chevron-forward-outline"></ion-icon>
+</ion-button>
+</ion-buttons>
+</ion-toolbar>
+<ion-icon style="
+width: 115%;
+height: 100%;
+position: fixed;
+top: 0;
+color: rgb(45 211 111 / 20%);
+left: -27px;
+right: 0;
+" name="scan-outline"></ion-icon>
+</ion-content>
+</ion-menu>
+
+<ion-router-outlet id="main"></ion-router-outlet>
+<ion-toolbar style="position: fixed;z-index: 1;bottom: 0;" mode="ios" class="music-toolbar" *ngIf="music.show">
+<ion-progress-bar style="margin-bottom: 2px;" [type]="!music.isPlaying && !music.id ? 'indeterminate' : 'determinate'" [value]="progress">
+</ion-progress-bar>
+<ion-buttons slot="start" class="music-toolbar-buttons">
+<ion-button color="primary" class="music-toolbar-button" [disabled]="!music.isPlaying && !music.id" (click)="toggleMusic()">
+<ion-icon slot="icon-only" [name]="music.isPlaying ? 'pause' : 'play'"></ion-icon>
+</ion-button>
+</ion-buttons>
+<ion-title class="music-toolbar-title" (touchstart)="openMusicModal($event)" (click)="openMusicModal($event)">
+{{music.author}}
+<p class="ion-no-margin">
+{{music.song}}
+</p>
+</ion-title>
+<ion-buttons slot="end" class="music-toolbar-buttons">
+<ion-button color="medium" class="music-toolbar-button" id="closedbtns" (click)="closePlayer()">
+<ion-icon slot="icon-only" name="close-outline"></ion-icon>
+</ion-button>
+</ion-buttons>
+</ion-toolbar>
+</ion-app>

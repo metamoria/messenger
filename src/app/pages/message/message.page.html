@@ -1,0 +1,249 @@
+<div class="newbackgrouds" [style.background-color]="chatDizaynColor.color"><div [style.background-image]="'url('+ chatDizayn.image +')'" class="newbackgroudsimg"></div></div>
+
+<div *ngIf="pwamobilstatus" class="pwamobileonlies">
+<div class="newlopwsamob">
+<ion-icon name="phone-portrait-outline"></ion-icon><br>
+<p style="max-width: 650px;">
+{{'messenger.noconnetmobiles' | translate}} <br>
+{{'messenger.nomobileconnetss' | translate}}
+</p>
+<ion-button (click)="tryloginx()" color="dark" expand="block" class="ion-margin-start ion-margin-end ion-margin-bottom" type="button">
+{{'messenger.countimes' | translate}}
+</ion-button>
+</div>
+</div>
+
+
+<div *ngIf="ltypeis == 'pwa' && !sendsycn && !pwamobilstatus" class="pwamobileonlies">
+<div class="newlopwsamob">
+<ion-icon name="sync-outline"></ion-icon><br>
+<p>
+{{'messenger.sycingdata' | translate}}
+</p>
+<ion-progress-bar color="light" style="
+width: 40%;
+margin: 0 auto;
+margin-top: 35px;
+" type="indeterminate"></ion-progress-bar>
+</div>
+</div>
+
+
+<div *ngIf="serverstatus == 'connect' && isOnline == 'offline'" class="pwamobileonlies">
+<div class="newlopwsamob">
+<ion-icon name="wifi-outline"></ion-icon><br>
+<p>
+{{'messenger.offlinemode' | translate}}<br>
+{{'messenger.reconntetted' | translate}}
+</p>
+<ion-progress-bar color="light" style="
+width: 40%;
+margin: 0 auto;
+margin-top: 35px;
+" type="indeterminate"></ion-progress-bar>
+</div>
+</div>
+
+
+
+<ion-header mode="ios" [translucent]="true" class="ion-no-border">
+<ion-toolbar mode="ios">
+<ion-buttons slot="start" (click)="openSettings()">
+<ion-avatar *ngIf="userphotos" class="avatar-sm ion-margin-start">
+<img *ngIf="userphotos == 'none'" id="userphotos{{uuuserid}}" src="assets/images/avatars/0.jpg">
+<img *ngIf="userphotos != 'none'" id="userphotos{{uuuserid}}" src="{{userphotos}}">
+
+<ion-icon style="
+position: absolute;
+right: -5px;
+width: 15px;
+height: 15px;
+" name="ellipse" [color]="serveractivestats ? 'success' : 'danger'"></ion-icon>
+</ion-avatar>
+</ion-buttons>
+
+<ion-title *ngIf="serverstatus == 'connect'">{{'login_app_name' | translate}}</ion-title>
+<ion-title *ngIf="serverstatus == 'connecting'"><ion-icon style="width: 0px;height: 0px;" name="wifi-outline"></ion-icon> {{'messenger.serverconnecting' | translate}}</ion-title>
+<ion-title *ngIf="serverstatus == 'connecterror'"><ion-icon style="width: 0px;height: 0px;" name="wifi-outline"></ion-icon> {{'messenger.serverconnecterror' | translate}}</ion-title>
+
+<ion-buttons slot="end">
+<ion-button (click)="presentActionSheet()" class="yenimesajbtn" color="dark">
+<ion-icon style="margin-right: 3px;" slot="icon-only" name="menu-outline"></ion-icon>
+</ion-button>
+</ion-buttons>
+</ion-toolbar>
+
+<ion-toolbar mode="ios">
+<ion-segment mode="ios" [(ngModel)]="segmentView" class="full-width">
+<ion-segment-button (click)="changeTabs('chats')" value="chats">
+<ion-label>{{'messenger.chats' | translate}}</ion-label>
+</ion-segment-button>
+<!--
+<ion-segment-button style="display: none;" (click)="changeTabs('calls')" value="calls">
+<ion-label>{{'messenger.calls' | translate}}</ion-label>
+</ion-segment-button>-->
+<ion-segment-button (click)="changeTabs('people')" value="people">
+<ion-label>{{'messenger.people' | translate}}</ion-label>
+</ion-segment-button>
+</ion-segment>
+</ion-toolbar>
+
+<ion-progress-bar *ngIf="serverstatus == 'connecting'" type="indeterminate"></ion-progress-bar>
+</ion-header>
+
+  
+<ion-content [fullscreen]="true">
+
+<div [style.transform]="segmentView == 'chats' ? 'none' : 'translate3d(-800px, -800px, -800px)'" class="chat-list">
+<ion-list>
+
+<!--
+<ion-virtual-scroll [items]="messageData" approxItemHeight="60px"></ion-virtual-scroll>
+*virtualItem="let items; let itemBounds = bounds;"-->
+
+<ion-item-sliding *ngFor="let items of messageData"  [style.display]="!items ? 'none' : '' || !items.message ? 'none' : ''">
+<ion-item class="chat-item"
+lines="none"
+detail="false" button [class]="items.userid == activeitems ? 'sactived' : 'nosapassif'" (click)="messageDetail(items)"> 
+<ion-avatar class="avatar-md has-status" slot="start">
+<img *ngIf="items.photo == 'none'" id="messagephoto{{items.userid}}" src="assets/images/avatars/0.jpg">
+<img *ngIf="items.photo != 'none'" id="messagephotos{{items.userid}}" src="{{items.photo}}">
+<div class="avatar-status">
+<div id="xisonly{{items.userid}}" style="display:none" class="online-status active"></div>
+</div>
+</ion-avatar>
+<ion-label>
+<h2 id="messagename{{items.userid}}" class="chat-name">{{items.fullName}}</h2>
+<div class="chat-description">
+<div *ngIf="items.message" class="content-preview" id="messagecontes{{items.userid}}">{{items.message}}</div>
+</div>
+</ion-label>
+
+<div id="messageLooks{{items.userid}}" [style.display]="items.messageLook ? 'block' : 'none'" class="online-status unread" slot="end"></div>
+</ion-item>
+
+<ion-item-options side="end" style="padding-bottom: 12px;">
+<!--
+<ion-item-option color="medium">
+<ion-icon slot="start" name="volume-mute-outline"></ion-icon>
+<ion-label>
+Mute
+</ion-label>
+</ion-item-option>-->
+<ion-item-option (click)="deletechats(items)" color="danger" expandable>
+<ion-icon slot="start" name="trash-outline"></ion-icon>
+<ion-label>
+{{'general.delete' | translate}}
+</ion-label>
+</ion-item-option>
+</ion-item-options>
+</ion-item-sliding>
+
+</ion-list>
+</div>
+
+<div [style.transform]="segmentView == 'people' ? 'none' : 'translate3d(-800px, -800px, -800px)'" class="chat-list">
+<ion-list>
+
+<!-- 
+<ion-virtual-scroll [items]="peopleData" approxItemHeight="60px"></ion-virtual-scroll>
+*virtualItem="let itemss; let itemBounds = bounds;"
+-->
+
+<ion-item-group  *ngFor="let itemsss of alphabet">
+<ion-item-divider style="margin-bottom: 12px;">
+<ion-label>{{itemsss}}</ion-label>
+</ion-item-divider>
+
+<div *ngFor="let itemss of peopleData">
+<ion-item button *ngIf="itemss.fullName.toUpperCase().charAt(0) == itemsss"  [class]="itemss.userid == activeitems ? 'sactived' : 'nosapassif'" (click)="messageDetail(itemss)" [style.display]="!itemss ? 'none' : ''"
+class="chat-item"
+lines="none"
+detail="false"
+>
+<ion-avatar class="avatar-md has-status" slot="start">
+<img *ngIf="itemss.photo == 'none'" id="messagephoto2{{itemss.userid}}" src="assets/images/avatars/0.jpg">
+<img *ngIf="itemss.photo != 'none'" id="messagephotos2{{itemss.userid}}" src="{{itemss.photo}}">
+<div class="avatar-status">
+<div id="isonly{{itemss.userid}}" style="display:none" class="online-status active"></div>
+<!--[style.display]="itemss.isOnly == 'online' ? 'block' : 'none'"-->
+</div>
+</ion-avatar>
+<ion-label>
+<h2 id="messagename2{{itemss.userid}}" class="chat-name">{{itemss.fullName}}</h2>
+<div class="chat-description">
+<div *ngIf="itemss.desc_status" id="messagedesc2{{itemss.userid}}" class="content-preview">{{itemss.desc_status}}</div>
+</div>
+</ion-label>
+<div class="online-status unread" slot="end"></div>
+</ion-item>
+</div>
+</ion-item-group>
+
+</ion-list>
+</div>
+<!--
+<ion-refresher slot="fixed" (ionRefresh)="doRefresh($event)">
+<ion-refresher-content pullingIcon="arrow-down-outline"></ion-refresher-content>
+</ion-refresher>
+
+<ion-searchbar [formControl]="searchMessageList" cancelButtonIcon="arrow-back-outline"
+[placeholder]="'messages_search_title' | translate" *ngIf="isIos">
+</ion-searchbar>
+
+<ion-list lines="none" class="ion-padding-bottom">
+<ion-item-sliding *ngFor="let user of messagesList">
+<ion-item button detail="false" [routerLink]="['/message-detail', user.id]" routerdirection="forward">
+<ion-avatar slot="start">
+<img [src]="user.image">
+</ion-avatar>
+<ion-label>
+<h2>{{user.first_name}} {{user.last_name}}</h2>
+<p>{{user.last_message}}</p>
+</ion-label>
+</ion-item>
+
+<ion-item-options side="start">
+<ion-item-option color="medium">
+<ion-icon slot="start" name="volume-mute-outline"></ion-icon>
+<ion-label>
+Close
+</ion-label>
+</ion-item-option>
+<ion-item-option color="danger" expandable>
+<ion-icon slot="start" name="trash-outline"></ion-icon>
+<ion-label>
+More
+</ion-label>
+</ion-item-option>
+</ion-item-options>
+
+<ion-item-options side="end">
+<ion-item-option color="medium">
+<ion-icon slot="start" name="volume-mute-outline"></ion-icon>
+<ion-label>
+Mute
+</ion-label>
+</ion-item-option>
+<ion-item-option color="danger" expandable>
+<ion-icon slot="start" name="trash-outline"></ion-icon>
+<ion-label>
+Delete
+</ion-label>
+</ion-item-option>
+</ion-item-options>
+</ion-item-sliding>
+</ion-list>
+-->
+</ion-content>
+
+<div style="
+position: fixed;
+z-index: 99;
+top: 0;
+bottom: 0;
+left: 0;
+right: 0;
+background: rgb(143 143 143 / 11%);
+" *ngIf="serverstatus == 'connecting'">
+</div>

@@ -1,0 +1,12 @@
+<ion-header [translucent]="true" class="ion-no-border">
+<ion-toolbar style="--background: rgb(250 235 215 / 10%);height: 30px;">
+<ion-title><ion-icon color="dark" (click)="closeModal()" name="remove-outline"></ion-icon></ion-title>
+</ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+<div class="ion-padding ion-text-center center_loc paddingoslo" style="height:100%; margin-top: 10px;">
+<div *ngIf="viseble" [style.background-image]="'url('+ photo +')'" style="width: 100%; height: 100%;background-size: contain;background-repeat: no-repeat;background-position: center;"></div>
+<ion-spinner class="center_loc" *ngIf="!viseble" name="crescent"></ion-spinner>
+</div>
+</ion-content>

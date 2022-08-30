@@ -1,0 +1,7 @@
+{
+  "name": "omany social network umberty",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "angular"
+}

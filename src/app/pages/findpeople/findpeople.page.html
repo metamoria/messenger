@@ -1,0 +1,39 @@
+<ion-header style="background: transparent;--background: transparent;" [translucent]="false" class="ion-no-border">
+<ion-toolbar style="background: transparent;--background: transparent;">
+<ion-title style="background: transparent;--background: transparent;"><ion-icon color="dark" (click)="closeModal()" name="remove-outline"></ion-icon></ion-title>
+</ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+<div class="ion-padding ion-text-center" style="background: transparent;--background: transparent;">
+<ion-avatar class="avatar-lg">
+<ion-icon name="person-add-outline"></ion-icon>
+</ion-avatar>
+<h4><strong>{{ 'messenger.findpeople' | translate}}</strong></h4>
+<p style="margin-bottom: 0;margin-top: 0;">{{ 'messenger.findpeopleinfo' | translate}}</p>
+</div>
+
+<ion-list style="background: transparent;--background: transparent;">
+<ion-item style="background: transparent;--background: transparent;" (click)="checkClipboard()" style="padding-right: 15px;padding-left: 15px;--border-radius: 10px;" button detail="false" lines="none" color="light">
+<ion-input id="userkeyid"  type="text" maxlength="250" placeholder="{{'messenger.userid' | translate}}" [disabled]="form_post_pross"></ion-input>
+</ion-item>
+<p style="padding-right: 15px;padding-left: 15px;text-align: left;margin-top: 10px;margin-bottom: 25px;font-size: 13px;">{{'messenger.findpeopleinfos' | translate}}</p>
+
+<ion-button (click)="finds()" color="dark" expand="block" class="ion-margin-start ion-margin-end ion-margin-bottom" type="button" [disabled]="form_post_pross">
+{{'messenger.find' | translate}}
+<ion-spinner *ngIf="form_post_pross" name="dots" style="margin-left: 10px;"></ion-spinner>
+</ion-button>
+
+<p style="padding-right: 15px;padding-left: 15px;text-align: left;margin-top: 20px;margin-bottom: 0;font-size: 14px;font-weight: 600;">{{'messenger.amfindkeycode' | translate}}</p>
+<div  (click)="writeToClipboard()" style="
+position: fixed;
+left: 0;
+right: 0;
+height: 90px;
+z-index: 99;
+"></div>
+<ion-item style="padding-right: 15px;padding-left: 15px;--border-radius: 10px;" button detail="false" lines="none" color="light">
+<ion-input disabled id="amuserkeyid"  type="text" maxlength="250" value="{{userid}}"></ion-input>
+</ion-item>
+</ion-list>
+</ion-content>

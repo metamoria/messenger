@@ -1,0 +1,27 @@
+{
+"alllist": [
+{
+"get": {
+"version": "1.0.0",
+
+"socketurl": "https://muazkhan.com:9001/",
+"server_id": "hollamessenger-server-id-random-code",
+"server_password": "server-pass-random-code",
+
+"user_encryption_token": "token_random_code",
+
+"pwamobile_encryption_token": "token_crpty_random_code",
+
+"registerTersm": "https://domain.com/terms",
+"registerPrivacy": "https://domain.com/privacy",
+
+"mail_securetoken": "868bf7bb-7a54-4964-991b-0e1d768b6e2f",
+"mail_host": "smtp.domain.com",
+"mail_username": "username@domain.com",
+"mail_password": "pass",
+"mail_from": "from@domain.com"
+
+}
+}
+]
+}

@@ -1,0 +1,64 @@
+<ion-header [translucent]="false" class="ion-no-border">
+<ion-toolbar>
+<ion-title><ion-icon color="dark" (click)="closeModal()" name="remove-outline"></ion-icon></ion-title>
+</ion-toolbar>
+</ion-header>
+
+<ion-content>
+<div *ngIf="photo" class="ion-padding ion-text-center" style="padding: 0;">
+<ion-item lines="none" style="padding: 0;--padding-bottom: 16px;--padding-top: 16px;"> 
+<ion-avatar (click)="openPhoto(user.photo)" *ngIf="user" style="
+margin: 0 auto;
+width: 135px;
+height: 135px;
+" class="avatar-lg">
+<img *ngIf="user.photo != 'none'" [src]="user.photo">
+<img *ngIf="user.photo == 'none'" src="assets/images/avatars/0.jpg">
+</ion-avatar>
+</ion-item>
+</div>
+
+
+<ion-list>
+
+<ion-item lines="none">
+<ion-label position="stacked">{{'auth.name' | translate}}</ion-label>
+<p *ngIf="user">{{user.fullName}}</p>
+</ion-item>
+
+<ion-item lines="none" class="ion-no-inner-padding-end">
+<ion-label position="stacked">{{'messenger.bio' | translate}}</ion-label>
+<p *ngIf="user">{{user.desc_status}}</p>
+</ion-item>
+
+</ion-list>
+
+
+<ion-list>
+
+<ion-item *ngIf="user" button (click)="writeToClipboard()">
+<ion-icon name="finger-print" color="primary" slot="start"></ion-icon>
+<ion-label style="font-size: 14px;" *ngIf="user">
+{{user.userid}}
+</ion-label>
+</ion-item>
+
+<ion-item>
+<ion-icon name="lock-closed-outline" color="success" slot="start"></ion-icon>
+<ion-label style="font-size: 15px;">
+{{'messenger.crytoall' | translate}}
+</ion-label>
+</ion-item>
+<ion-item>
+<ion-icon name="document-lock-outline" color="success" slot="start"></ion-icon>
+<ion-label style="font-size: 15px;">
+{{'messenger.crytoallmedia' | translate}}
+</ion-label>
+</ion-item>
+</ion-list>
+
+
+<ion-list>
+<ion-list-header></ion-list-header>
+</ion-list>
+</ion-content>

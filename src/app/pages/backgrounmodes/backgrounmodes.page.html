@@ -1,0 +1,21 @@
+<ion-header [translucent]="false" class="ion-no-border">
+<ion-toolbar>
+<ion-title><ion-icon color="dark" (click)="closeModal()" name="remove-outline"></ion-icon></ion-title>
+</ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+<div class="ion-padding ion-text-center">
+<ion-avatar class="avatar-lg">
+<ion-icon name="pause-outline"></ion-icon>
+</ion-avatar>
+<h4><strong>{{'messenger.backgroundavibles' | translate}}</strong></h4>
+<p style="margin-bottom: 0;margin-top: 0;">{{ 'messenger.backgroundaviblesinfo' | translate}}</p>
+</div>
+
+<ion-list>
+<ion-button (click)="closeModal()" color="dark" expand="block" class="ion-margin-start ion-margin-end ion-margin-bottom" type="button">
+{{'messenger.backgrounokeys' | translate}}
+</ion-button>
+</ion-list>
+</ion-content>

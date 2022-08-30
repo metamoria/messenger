@@ -1,0 +1,290 @@
+<ion-header class="ion-no-border {{desktopwebs}}headnewspwa">
+<ion-toolbar>
+<ion-buttons slot="start">
+<!--<ion-back-button [text]="''" defaultHref="/tabs/messages"></ion-back-button>-->
+<ion-button (click)="closeModal()" color="dark">
+<ion-icon slot="icon-only" name="chevron-back-outline"></ion-icon>
+</ion-button>
+</ion-buttons>
+<ion-item lines="none" *ngIf="user">
+<ion-avatar slot="start" (click)="profile(user)">
+<img *ngIf="user.image != 'none'" id="mesdatiphoto{{userid}}" [src]="user.image">
+<img *ngIf="user.image == 'none'" id="mesdatiphotoo{{userid}}" src="assets/images/avatars/0.jpg">
+</ion-avatar>
+<ion-label (click)="profile(user)" class="ion-no-margin">
+<strong id="mesdatiname{{userid}}">{{user.name}}</strong>
+<p class="ion-no-margin" *ngIf="user.status == 'online' && !writer">
+{{'messenger.online' | translate}}
+</p>
+<p class="ion-no-margin" *ngIf="user.status == 'offline' && !writer || !user.status && !writer">
+{{'messenger.offline' | translate}}
+</p>
+<p class="ion-no-margin" *ngIf="writer">
+{{'messenger.writer' | translate}}
+</p>
+</ion-label>
+</ion-item>
+<ion-buttons slot="end" style="padding-right: 7px;">
+<!--
+<ion-button (click)="testmobileuploadclick()" class="yenimesajbtn" color="dark">
+TSF
+</ion-button>
+-->
+<ion-button *ngIf="user" [disabled]="user.status == 'offline'" (click)="call('voice')" class="yenimesajbtn" color="dark">
+<ion-icon slot="icon-only" name="call-outline"></ion-icon>
+</ion-button>
+<ion-button  *ngIf="user" [disabled]="user.status == 'offline'" (click)="call('video')" class="yenimesajbtn" color="dark">
+<ion-icon slot="icon-only" name="videocam-outline"></ion-icon>
+</ion-button>
+</ion-buttons>
+</ion-toolbar>
+</ion-header>
+ 
+<div class="newbackgrouds" [style.background-color]="chatDizaynColor.color"><div [style.background-image]="'url('+ chatDizayn.image +')'" class="newbackgroudsimg"></div></div>
+
+<ion-content class="{{desktopwebs}}" [scrollY]="isAllowScroll" [scrollEvents]="true" (ionScrollStart)="logScrollStart()"
+(ionScroll)="logScrolling($event)" (ionScrollEnd)="logScrollEnd()" id="contentmessagedetails">
+
+
+<ion-item-group [style.opacity]="viebled ? '1' : '0'" style="padding-top: 15px;" class="messages-item-group newmessageallcs" id="ionitemgenels">
+
+<ion-item-divider sticky class="message-divider scrolling" *ngIf="uumaygupopdivreal" (click)="clickgomss()">
+<ion-label>
+{{uumaygupopdiv}}
+</ion-label>
+</ion-item-divider>
+
+<!-- Date message divider -->
+<ion-item-divider sticky class="message-divider" *ngIf="!loadmores" (click)="loadData()">
+<ion-label>
+{{'messenger.loadmore' | translate}}
+</ion-label>
+</ion-item-divider>
+
+<ion-item-sliding disabled class="message-item-sliding"
+*ngFor="let message of chats; let index = index; let last = last" #slidingItem
+(ionDrag)="messageDraged($event, slidingItem)" id="items{{message.id}}"> 
+{{scrollBottoms(message)}}
+
+<ion-item-divider *ngIf="message.newdata" sticky class="message-divider">
+<ion-label>
+{{ !message.dataconverty ? (convertMonth(message)) : message.newdata}}
+</ion-label>
+</ion-item-divider>
+
+<!-- User message -->
+<ng-container *ngIf="message.type === 'user'">
+<ion-item lines="none" class="message-user">
+<!--
+<ion-avatar slot="start" class="ion-align-self-end user-avatar"
+*ngIf="chats[index + 1]?.type === 'me' || last">
+<img [src]="message.avatar">
+</ion-avatar>-->
+<div style="margin-left: 0; border-bottom-left-radius: 0px" class="message-container"
+[ngClass]="{'user-msg-padding': chats[index + 1]?.type !== 'me' && !last}">
+
+<span *ngIf="!message.files && !message.audiomintype && !message.photo" class="text" [innerHTML]="message.message"></span>
+
+<span *ngIf="message.files && !message.audiomintype && !message.photo" class="text">
+<img *ngIf="message.filetypemin == 'image' && message.filestatus == 'end' && !message.loaded" [style.display]="message.loaded ? 'none' : ''" [src]="message.fileurl | safe" (error)="onerror(message)" (onerror)="onerror(message)">
+<video controls controlsList="nodownload" style="width: 100%;" *ngIf="message.filetypemin == 'video' && message.filestatus == 'end' && !message.loaded" [style.display]="message.loaded ? 'none' : ''" [src]="message.fileurl | safe" (error)="onerror(message)" (onerror)="onerror(message)"></video>
+<audio controls controlsList="nodownload nofullscreen nospeed noplaybackrate noremoteplayback" style="width: 100%;" *ngIf="message.filetypemin == 'audio' && message.filestatus == 'end' && !message.loaded" [style.display]="message.loaded ? 'none' : ''" [src]="message.fileurl | safe" (error)="onerror(message)" (onerror)="onerror(message)"></audio>
+
+<a *ngIf="message.filestatus == 'end' && desktopwebs == 'desktopwebs'" [href]="message.fileurl | safe" target="_blank" download="{{message.files.name}}">{{message.files.name}}</a>
+<a *ngIf="message.filestatus == 'end' && desktopwebs == 'mobilesall'" (click)="getFileContent(message.fileurl)" target="_blank">{{message.files.name}}</a>
+
+
+<a *ngIf="message.filestatus == 'start'">{{message.files.name}}</a>
+<div *ngIf="message.filestatus == 'start'" style="display: flex;align-items: center;margin-top: 10px;width: 100%;min-width: 200px;" id="files-containerd{{message.fileuuid}}">
+<label id="files-label{{message.fileuuid}}">0%</label> <progress style="width: 100%;margin-left: 15px;" value="0" max="{{message.progressmax}}" id="files-pross{{message.fileuuid}}"></progress>
+</div>
+</span>
+
+<span *ngIf="!message.files && message.audiomintype && !message.photo" class="text audioreayou" style="white-space: normal;">
+<!--{{!message.conterss ? conterBlobs(message) : ''}}-->
+<!--
+{{conterBlobs(message)}}
+<audio *ngIf="message.conterss" controls controlsList="nodownload nofullscreen nospeed noplaybackrate noremoteplayback" style="width: 100%; min-width: 260px;margin-bottom: -20px;">
+<source [src]="message.conterss | safe" [type]="message.contersstype">
+</audio>
+--> 
+<ion-item button detail="false" class="newaudoidplayer">
+<ion-icon (click)="playMusicCTRL(message)" id="musicplaypaueicon{{message.id}}" name="play" slot="start"></ion-icon>
+<ion-label>
+<ion-progress-bar type="" value="0" id="musicpross{{message.id}}"></ion-progress-bar>
+</ion-label>
+<!--<ion-icon id="musicplayvolumeicon{{message.id}}" name="volume-low" slot="end"></ion-icon>-->
+</ion-item>
+
+<span *ngIf="message.dowloands" style="display: flex;align-items: center;margin-top: 5px;justify-content: center;">
+<ion-spinner style="width: 20px;height: 20px;margin-right: 6px;" name="crescent"></ion-spinner> {{'messenger.mediadowlonadds' | translate}}
+</span>
+
+</span>
+
+<span style="white-space: normal;" *ngIf="!message.files && !message.audiomintype && message.photo" class="text">
+<!--<{{conterBlobsPhoto(message)}} -->
+<!--<img *ngIf="message.conterphoto" [src]="message.conterphoto | safe">-->
+<img style="width: 100%;" (click)="openPhotoCTRL(message)" *ngIf="message.tumbimages" [src]="message.tumbimages | safe">
+
+<span *ngIf="message.dowloands" style="display: flex;align-items: center;margin-top: 5px;justify-content: center;">
+<ion-spinner style="width: 20px;height: 20px;margin-right: 6px;" name="crescent"></ion-spinner> {{'messenger.mediadowlonadds' | translate}}
+</span>
+
+</span>
+
+<small class="time">
+<ion-icon  *ngIf="message.files" name="document-outline"></ion-icon>
+{{message.clock}}</small>
+</div>
+</ion-item>
+</ng-container>
+
+<!-- My message -->
+<ng-container *ngIf="message.type === 'me'">
+<ion-item lines="none" class="message-me">
+<div class="message-container" style="border-bottom-right-radius: 0px" slot="end">
+
+<span *ngIf="!message.files && !message.audiomintype && !message.photo" class="text" [innerHTML]="message.message"></span>
+
+<span *ngIf="message.files && !message.audiomintype && !message.photo" class="text">
+<img *ngIf="message.filetypemin == 'image' && message.filestatus == 'end' && !message.loaded" [style.display]="message.loaded ? 'none' : ''" [src]="message.fileurl | safe" (error)="onerror(message)" (onerror)="onerror(message)">
+<video controls controlsList="nodownload" style="width: 100%;" *ngIf="message.filetypemin == 'video' && message.filestatus == 'end' && !message.loaded" [style.display]="message.loaded ? 'none' : ''" [src]="message.fileurl | safe" (error)="onerror(message)" (onerror)="onerror(message)"></video>
+<audio controls controlsList="nodownload nodownload nofullscreen nospeed noplaybackrate noremoteplayback" style="width: 100%;" *ngIf="message.filetypemin == 'audio' && message.filestatus == 'end' && !message.loaded" [style.display]="message.loaded ? 'none' : ''" [src]="message.fileurl | safe" (error)="onerror(message)" (onerror)="onerror(message)"></audio>
+
+<!--(click)="getFileContent(message.fileurl)" [href]="message.fileurl | safe" target="_blank" download="{{message.files.name}}"-->
+<a *ngIf="message.filestatus == 'end' && desktopwebs == 'desktopwebs'" [href]="message.fileurl | safe" target="_blank" download="{{message.files.name}}">{{message.files.name}}</a>
+<a *ngIf="message.filestatus == 'end' && desktopwebs == 'mobilesall'" (click)="getFileContent(message.fileurl)" target="_blank">{{message.files.name}}</a>
+
+<a *ngIf="message.filestatus == 'start'">{{message.files.name}}</a>
+<div *ngIf="message.filestatus == 'start'" style="display: flex;align-items: center;margin-top: 10px;width: 100%;min-width: 200px;" id="files-containerd{{message.fileuuid}}">
+<label id="files-label{{message.fileuuid}}">0%</label> <progress style="width: 100%;margin-left: 15px;" value="0" max="{{message.progressmax}}" id="files-pross{{message.fileuuid}}"></progress>
+</div>
+</span>
+
+<span *ngIf="!message.files && message.audiomintype && !message.photo" class="text audioreame" style="white-space: normal;">
+<!--{{!message.conterss ? conterBlobs(message) : ''}}-->
+<!--
+{{conterBlobs(message)}}
+<audio *ngIf="message.conterss" controls controlsList="nodownload nofullscreen nospeed noplaybackrate noremoteplayback" style="width: 100%; min-width: 260px;margin-bottom: -20px;">
+<source [src]="message.conterss | safe" [type]="message.contersstype">
+</audio>
+-->
+<ion-item button detail="false" class="newaudoidplayer">
+<ion-icon (click)="playMusicCTRL(message)" id="musicplaypaueicon{{message.id}}" name="play" slot="start"></ion-icon>
+<ion-label>
+<ion-progress-bar type="" value="0" id="musicpross{{message.id}}"></ion-progress-bar>
+</ion-label>
+<!--<ion-icon id="musicplayvolumeicon{{message.id}}" name="volume-low" slot="end"></ion-icon>-->
+</ion-item>
+
+<span *ngIf="message.dowloands" style="display: flex;align-items: center;margin-top: 5px;justify-content: center;">
+<ion-spinner style="width: 20px;height: 20px;margin-right: 6px;" name="crescent"></ion-spinner> {{'messenger.mediadowlonadds' | translate}}
+</span>
+
+</span>
+
+<span style="white-space: normal" *ngIf="!message.files && !message.audiomintype && message.photo" class="text">
+<!--<{{conterBlobsPhoto(message)}} -->
+<!--<img *ngIf="message.conterphoto" [src]="message.conterphoto | safe">-->
+<img style="width: 100%;" (click)="openPhotoCTRL(message)" *ngIf="message.tumbimages" [src]="message.tumbimages | safe">
+
+<span *ngIf="message.dowloands" style="display: flex;align-items: center;margin-top: 5px;justify-content: center;">
+<ion-spinner style="width: 20px;height: 20px;margin-right: 6px;" name="crescent"></ion-spinner> {{'messenger.mediadowlonadds' | translate}}
+</span>
+
+</span>
+
+<small class="time">
+<ion-icon *ngIf="message.files" name="document-outline"></ion-icon>
+{{message.clock}}
+</small>
+</div>
+</ion-item>
+<p *ngIf="message.ctype == 'offline'" style="
+text-align: right;
+padding: 0 0 0 0px;
+margin: 7px 15px 10px 7px;
+font-size: 12px;
+">{{'messenger.nomessageoffline' | translate}}</p>
+</ng-container>
+
+<!-- Reply slide -->
+<ion-item-options side="end" class="no-border">
+<ion-item-option disabled style="--background: var(--ion-item-background);">
+<ion-icon slot="icon-only" name="arrow-undo-outline" color="primary"></ion-icon>
+</ion-item-option>
+</ion-item-options>
+
+</ion-item-sliding>
+
+</ion-item-group>
+</ion-content>
+<ion-footer class="ion-no-border"  *ngIf="noofflinemssage">
+<p style="
+margin: 0;
+background: rgb(221 221 221 / 32%);
+padding: 10px 10px 10px 10px;
+font-size: 14px;
+">{{'messenger.noreviceroff' | translate}}
+</p>
+</ion-footer>
+
+<ion-footer style="min-height: 44px;" class="ion-no-border {{desktopwebs}}ionfooterpwa">
+<div id="files-containerd"></div>
+<!--image/-->
+<div class="files-container"></div>
+<input style="display: none;" id="selecImagePickersOda" class="displaynonesss" min="1" max="1" type="file" accept="*" (change)="inputSelectPictureNewsPickerOda($event)">
+<input style="display: none;" id="selecImagePicker" class="displaynonesss" min="1" max="1" type="file" accept="image/*" (change)="selecImagePicker($event)">
+
+<input style="display: none;" id="testmobileupload" class="displaynonesss" min="1" max="1" type="file" accept="*" (change)="testmobileupload($event)">
+
+
+<ion-toolbar style="height: auto;">
+<ion-buttons slot="start" *ngIf="!messageControl.valid  && !records">
+<ion-button style="--background: rgb(244 245 248 / 1%);" [disabled]="user.status == 'offline' || photoloaders"  *ngIf="user" (click)="sendFilesPhoto()">
+<ion-icon *ngIf="!photoloaders" slot="icon-only" name="image-outline" color="primary"></ion-icon>
+<ion-spinner *ngIf="photoloaders" name="crescent"></ion-spinner>
+</ion-button>
+<ion-button style="display: none; --background: rgb(244 245 248 / 1%);" [disabled]="user.status == 'offline'"  *ngIf="user && desktopwebs == 'desktopwebs'" (click)="sendFiles()">
+<ion-icon slot="icon-only" name="add-circle-outline" color="primary"></ion-icon>
+</ion-button>
+</ion-buttons>
+
+<ion-textarea style="--min-height: 44px; min-height: 44px; --max-height: 500px;" id="messageids" *ngIf="!records" (ionChange)="ionChange()" (ionFocus)="ionFocus()" autofocus style="margin-top: 0;" autoGrow rows="1" [placeholder]="'messages_title' | translate" [formControl]="messageControl"
+class="message-textarea"></ion-textarea>
+
+
+<ion-buttons *ngIf="!messageControl.valid  && !records" slot="end">
+<!--
+<ion-button style="--background: rgb(244 245 248 / 1%);" [disabled]="user.status == 'offline'" *ngIf="user && !messageControl.valid  && !records">
+<ion-icon slot="icon-only" name="happy-outline" color="primary"></ion-icon>
+</ion-button>
+-->
+<ion-button style="--background: rgb(244 245 248 / 1%);" [disabled]="user.status == 'offline'" *ngIf="user && !messageControl.valid && !records" (click)="voiceRecords()">
+<ion-icon slot="icon-only" name="mic-outline" color="primary"></ion-icon>
+</ion-button>
+</ion-buttons>
+
+<ion-buttons *ngIf="messageControl.valid  && !records" slot="end">
+<ion-button style="--background: rgb(244 245 248 / 1%);" (mousedown)="sendMessage($event)" *ngIf="messageControl.valid  && !records">
+<ion-icon slot="icon-only" name="send-outline" color="primary"></ion-icon>
+</ion-button>
+</ion-buttons>
+
+<ion-buttons *ngIf="!messageControl.valid && records" style="width: 100%;" slot="end">
+<div *ngIf="!messageControl.valid && records" class="recordisss">
+<div class="record recording"></div>
+{{'messenger.recordings' | translate}} <div id="recortimess">00:00:00</div>
+</div>
+
+<ion-button style="--background: rgb(244 245 248 / 1%); margin-right: 15px;" *ngIf="!messageControl.valid && records" (click)="cancelRecord()">
+<ion-icon slot="icon-only" name="mic-off-outline" color="danger"></ion-icon>
+</ion-button>
+
+<ion-button *ngIf="!messageControl.valid && records" (click)="stopRecord()" style="--background: rgb(244 245 248 / 1%); margin-right: 5px;">
+<ion-icon slot="icon-only" name="send-outline" color="primary"></ion-icon>
+</ion-button>
+</ion-buttons>
+</ion-toolbar>
+</ion-footer>

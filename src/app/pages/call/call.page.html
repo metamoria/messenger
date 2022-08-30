@@ -1,0 +1,138 @@
+<ion-header *ngIf="type == 'voice'" class="ion-no-border">
+<ion-toolbar>
+<ion-buttons slot="start">
+<!--<ion-back-button [text]="''" defaultHref="/tabs/messages"></ion-back-button>-->
+</ion-buttons>
+<ion-item lines="none" *ngIf="user">
+<ion-avatar slot="start">
+<img *ngIf="user.image != 'none'" id="mesdatiphoto{{uuserid}}" [src]="user.image">
+<img *ngIf="user.image == 'none'" id="mesdatiphotoo{{uuserid}}" src="assets/images/avatars/0.jpg">
+</ion-avatar>
+<ion-label class="ion-no-margin">
+<strong id="mesdatiname{{uuserid}}">{{user.name}}</strong>
+
+<p id="status{{uuserid}}" class="ion-no-margin" *ngIf="serverstatus == 'yesconnect'">
+{{'messenger.yesaviblevoicechats' | translate}}
+</p>
+<p id="status{{uuserid}}" class="ion-no-margin" *ngIf="serverstatus == 'noconnect'">
+{{'messenger.noaviblevoicechats' | translate}}
+</p>
+
+<p class="ion-no-margin" *ngIf="serverstatus == 'connecting'">
+{{'messenger.serverconnecting' | translate}}
+</p>
+<p class="ion-no-margin" *ngIf="serverstatus == 'connecterror'">
+{{'messenger.serverconnecterror' | translate}}
+</p>
+</ion-label>
+</ion-item>
+<ion-buttons slot="end" style="padding-right: 7px;">
+
+<ion-button *ngIf="user" (click)="mute()" class="yenimesajbtn" color="dark">
+<ion-icon *ngIf="!mic_isveled" slot="icon-only" name="mic-outline"></ion-icon>
+<ion-icon *ngIf="mic_isveled" slot="icon-only" name="mic-off-outline"></ion-icon>
+<!--
+<ion-icon slot="icon-only" name="mic-off-outline"></ion-icon>
+
+<ion-icon slot="icon-only" name="volume-high-outline"></ion-icon>
+<ion-icon slot="icon-only" name="volume-mute-outline"></ion-icon>
+-->
+</ion-button>
+
+<ion-button *ngIf="user" (click)="closeModal()" class="yenimesajbtn" color="dark">
+<ion-icon slot="icon-only" name="close-outline"></ion-icon>
+
+</ion-button>
+
+</ion-buttons>
+</ion-toolbar>
+</ion-header>
+
+
+<div *ngIf="type == 'voice'" id="connectmediayou" class="connectmediayou" style="display: none;">
+</div>
+
+<div *ngIf="type == 'voice'" id="connectmediame" class="connectmediame" style="display: none;">
+</div>
+
+
+
+
+
+<ion-header style="
+position: fixed;
+background: rgb(0 0 0 / 10%);
+backdrop-filter: blur(1px);
+" *ngIf="type == 'video'" class="ion-no-border" [translucent]="true">
+<ion-toolbar style="
+background: transparent;
+--background: transparent;
+">
+<ion-buttons slot="start">
+<!--<ion-back-button [text]="''" defaultHref="/tabs/messages"></ion-back-button>-->
+</ion-buttons>
+<ion-item style="
+background: transparent;
+--background: transparent;
+" lines="none" *ngIf="user">
+<ion-avatar slot="start">
+<img *ngIf="user.image != 'none'" id="mesdatiphoto{{uuserid}}" [src]="user.image">
+<img *ngIf="user.image == 'none'" id="mesdatiphotoo{{uuserid}}" src="assets/images/avatars/0.jpg">
+</ion-avatar>
+<ion-label class="ion-no-margin">
+<strong style="
+color: white;
+" id="mesdatiname{{uuserid}}">{{user.name}}</strong>
+
+<p style="
+color: white;
+" id="status{{uuserid}}" class="ion-no-margin" *ngIf="serverstatus == 'yesconnect'">
+{{'messenger.yesaviblevideochats' | translate}}
+</p>
+<p style="
+color: white;
+" id="status{{uuserid}}" class="ion-no-margin" *ngIf="serverstatus == 'noconnect'">
+{{'messenger.noaviblevideochats' | translate}}
+</p>
+
+<p style="
+color: white;
+" class="ion-no-margin" *ngIf="serverstatus == 'connecting'">
+{{'messenger.serverconnecting' | translate}}
+</p>
+<p style="
+color: white;
+" class="ion-no-margin" *ngIf="serverstatus == 'connecterror'">
+{{'messenger.serverconnecterror' | translate}}
+</p>
+</ion-label>
+</ion-item>
+<ion-buttons slot="end" style="padding-right: 7px;">
+
+<ion-button *ngIf="user" (click)="mute()" class="yenimesajbtn" color="dark">
+<ion-icon color="light" *ngIf="!mic_isveled" slot="icon-only" name="videocam-outline"></ion-icon>
+<ion-icon color="light" *ngIf="mic_isveled" slot="icon-only" name="videocam-off-outline"></ion-icon>
+</ion-button>
+
+
+<ion-button *ngIf="user" (click)="closeModal()" class="yenimesajbtn" color="dark">
+<ion-icon color="light" slot="icon-only" name="close-outline"></ion-icon>
+</ion-button>
+
+</ion-buttons>
+</ion-toolbar>
+</ion-header>
+
+<div *ngIf="type == 'video'" id="connectmediayou" class="connectmediayou" style="display: block;">
+</div>
+
+<div *ngIf="type == 'video'" id="connectmediame" class="connectmediame" style="display: block;">
+</div>
+
+
+
+
+<audio style="display: none;" id="audioOfficsals" controls>
+<source src="" type="audio/mpeg">
+Your browser does not support the audio element.
+</audio>

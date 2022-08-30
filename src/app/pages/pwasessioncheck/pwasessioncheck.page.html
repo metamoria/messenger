@@ -1,0 +1,24 @@
+<ion-header [translucent]="false" class="ion-no-border">
+<ion-toolbar>
+<ion-title><ion-icon color="dark" (click)="closeModal()" name="remove-outline"></ion-icon></ion-title>
+</ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+<div class="ion-padding ion-text-center">
+<ion-avatar class="avatar-lg">
+<ion-icon name="qr-code-outline"></ion-icon>
+</ion-avatar>
+<h4><strong>{{'messenger.sessionname' | translate}}</strong></h4>
+<p style="margin-bottom: 0;margin-top: 0;">{{ 'messenger.sessiondesc' | translate}}</p>
+</div>
+
+<ion-list>
+<p style="padding-right: 15px;padding-left: 15px;text-align: left;margin-top: 10px;margin-bottom: 25px;font-size: 15px;text-align: center;">{{ 'messenger.qrscanreq' | translate}}</p>
+
+<ion-button (click)="finds()" color="dark" expand="block" class="ion-margin-start ion-margin-end ion-margin-bottom" type="button" [disabled]="form_post_pross">
+{{'messenger.confentry' | translate}}
+<ion-spinner *ngIf="form_post_pross" name="dots" style="margin-left: 10px;"></ion-spinner>
+</ion-button>
+</ion-list>
+</ion-content>

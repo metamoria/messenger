@@ -1,0 +1,23 @@
+Full Doc file is here 
+This Doc is updated on each new update
+
+Doc
+https://drive.google.com/file/d/1sxLuIACfCzQkgQTudY_n0wBI5cA58o89/view?usp=sharing
+https://github.com/meforce/holla-messenger
+
+https://www.rtcmulticonnection.org/
+
+https://ionicframework.com/docs/native
+https://ionicframework.com/docs/components
+https://ionic.io/ionicons
+
+https://capacitorjs.com/
+https://capacitorjs.com/docs/apis
+https://capacitorjs.com/docs/web
+
+
+RTCMultiConnection
+https://github.com/muaz-khan/RTCMultiConnection
+
+RTCMultiConnection-Server
+https://github.com/muaz-khan/RTCMultiConnection-Server

@@ -1,0 +1,14 @@
+ion-item {--border-color: rgb(255 255 255 / 0%);padding: 12px 0;}
+ion-avatar.avatar-lg, .avatar-lg ion-icon {display: inline-block;width: 50px;height: 50px;}
+ion-title ion-icon {width: 110px;height: 30px;     margin-bottom: 7px;}
+.center_loc{
+position: fixed;
+text-align: center;
+left: 0;
+right: 0;
+margin: 0 auto;
+top: 50%;
+-webkit-transform: translateY(-50%);
+transform: translateY(-50%);
+z-index: 99999;
+}
